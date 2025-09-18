@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,9 +7,57 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Layout from "@/components/Layout";
+import { useToast } from "@/hooks/useToast";
 import { Mail, Phone, MapPin, Clock, MessageCircle, HelpCircle } from "lucide-react";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    userType: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { toast } = useToast();
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      toast({
+        type: 'success',
+        title: 'Message Sent!',
+        description: 'Thank you for contacting us. We\'ll get back to you within 24 hours.',
+      });
+      setFormData({ 
+        firstName: "", 
+        lastName: "", 
+        email: "", 
+        userType: "", 
+        subject: "", 
+        message: "" 
+      });
+    } catch (error) {
+      toast({
+        type: 'error',
+        title: 'Failed to Send',
+        description: 'There was an error sending your message. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const faqs = [
     {
       question: "How does the AI motion tracking work?",
@@ -66,25 +115,44 @@ const Contact = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="Your first name" />
+                        <Input 
+                          id="firstName" 
+                          value={formData.firstName}
+                          onChange={(e) => handleInputChange('firstName', e.target.value)}
+                          placeholder="Your first name" 
+                          required
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Your last name" />
+                        <Input 
+                          id="lastName" 
+                          value={formData.lastName}
+                          onChange={(e) => handleInputChange('lastName', e.target.value)}
+                          placeholder="Your last name" 
+                          required
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address</Label>
-                      <Input id="email" type="email" placeholder="your.email@example.com" />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        placeholder="your.email@example.com" 
+                        required
+                      />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="userType">I am a...</Label>
-                        <Select>
+                        <Select value={formData.userType} onValueChange={(value) => handleInputChange('userType', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="Select your role" />
                           </SelectTrigger>
@@ -100,7 +168,7 @@ const Contact = () => {
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="subject">Subject</Label>
-                        <Select>
+                        <Select value={formData.subject} onValueChange={(value) => handleInputChange('subject', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="What is this about?" />
                           </SelectTrigger>
@@ -119,13 +187,16 @@ const Contact = () => {
                       <Label htmlFor="message">Message</Label>
                       <Textarea 
                         id="message" 
+                        value={formData.message}
+                        onChange={(e) => handleInputChange('message', e.target.value)}
                         placeholder="Please describe your question or concern in detail..." 
                         className="min-h-[120px]"
+                        required
                       />
                     </div>
-                    <Button size="lg" className="w-full">
+                    <Button size="lg" className="w-full" type="submit" disabled={isSubmitting}>
                       <MessageCircle className="mr-2 h-4 w-4" />
-                      Send Message
+                      {isSubmitting ? 'Sending Message...' : 'Send Message'}
                     </Button>
                   </form>
                 </CardContent>

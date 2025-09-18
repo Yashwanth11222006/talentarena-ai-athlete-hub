@@ -12,6 +12,7 @@ import Networking from "./pages/Networking";
 import Leaderboard from "./pages/Leaderboard";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import { ToastProvider } from "./components/ui/toast-provider";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <ToastProvider />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

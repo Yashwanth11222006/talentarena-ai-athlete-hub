@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { AuthModal } from "./AuthModal";
+import { Menu, X, User, LogOut } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { user, logout } = useAuth();
   const location = useLocation();
 
   const navigation = [
@@ -50,12 +54,30 @@ const Header = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" asChild>
-              <Link to="/login">Sign In</Link>
-            </Button>
-            <Button variant="default" asChild>
-              <Link to="/signup">Get Started</Link>
-            </Button>
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <User className="h-4 w-4" />
+                  <span className="text-sm font-medium">{user.name}</span>
+                  <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded capitalize">
+                    {user.type}
+                  </span>
+                </div>
+                <Button variant="outline" size="sm" onClick={logout}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" onClick={() => setIsAuthModalOpen(true)}>
+                  Sign In
+                </Button>
+                <Button size="sm" onClick={() => setIsAuthModalOpen(true)}>
+                  Get Started
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -90,17 +112,40 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-border">
-                <Button variant="ghost" asChild>
-                  <Link to="/login">Sign In</Link>
-                </Button>
-                <Button variant="default" asChild>
-                  <Link to="/signup">Get Started</Link>
-                </Button>
+                {user ? (
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <User className="h-4 w-4" />
+                      <span className="text-sm font-medium">{user.name}</span>
+                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded capitalize">
+                        {user.type}
+                      </span>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={logout}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Button variant="ghost" onClick={() => setIsAuthModalOpen(true)}>
+                      Sign In
+                    </Button>
+                    <Button variant="default" onClick={() => setIsAuthModalOpen(true)}>
+                      Get Started
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>
         )}
       </div>
+      
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+      />
     </header>
   );
 };

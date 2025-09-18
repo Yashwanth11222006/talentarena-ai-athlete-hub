@@ -7,10 +7,97 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Layout from "@/components/Layout";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/useToast";
 import { Upload, Play, BarChart3, Trophy, Target, Users } from "lucide-react";
 
 const Athletes = () => {
   const [activeTab, setActiveTab] = useState("signup");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    age: "",
+    sport: "",
+    location: "",
+    bio: "",
+  });
+  const [uploadData, setUploadData] = useState({
+    exerciseType: "",
+    date: "",
+    file: null as File | null,
+  });
+  
+  const { signup, user, isLoading } = useAuth();
+  const { toast } = useToast();
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleUploadChange = (field: string, value: string | File) => {
+    setUploadData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await signup(formData, 'athlete');
+      toast({
+        type: 'success',
+        title: 'Profile Created!',
+        description: 'Welcome to TalentArena. Your athlete profile has been created successfully.',
+      });
+      setActiveTab("upload");
+    } catch (error) {
+      toast({
+        type: 'error',
+        title: 'Error',
+        description: 'Failed to create profile. Please try again.',
+      });
+    }
+  };
+
+  const handleVideoUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uploadData.file || !uploadData.exerciseType) {
+      toast({
+        type: 'warning',
+        title: 'Missing Information',
+        description: 'Please select a video file and exercise type.',
+      });
+      return;
+    }
+
+    try {
+      // Simulate upload
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      toast({
+        type: 'success',
+        title: 'Video Uploaded!',
+        description: 'Your performance video is being analyzed. Results will be available shortly.',
+      });
+      setActiveTab("dashboard");
+    } catch (error) {
+      toast({
+        type: 'error',
+        title: 'Upload Failed',
+        description: 'Failed to upload video. Please try again.',
+      });
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleUploadChange('file', file);
+      toast({
+        type: 'info',
+        title: 'File Selected',
+        description: `${file.name} selected for upload.`,
+      });
+    }
+  };
 
   return (
     <Layout>
@@ -39,29 +126,55 @@ const Athletes = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="Enter your first name" />
+                        <Input 
+                          id="firstName" 
+                          value={formData.firstName}
+                          onChange={(e) => handleInputChange('firstName', e.target.value)}
+                          placeholder="Enter your first name" 
+                          required
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Enter your last name" />
+                        <Input 
+                          id="lastName" 
+                          value={formData.lastName}
+                          onChange={(e) => handleInputChange('lastName', e.target.value)}
+                          placeholder="Enter your last name" 
+                          required
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="Enter your email" />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        placeholder="Enter your email" 
+                        required
+                      />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="age">Age</Label>
-                        <Input id="age" type="number" placeholder="Age" />
+                        <Input 
+                          id="age" 
+                          type="number" 
+                          value={formData.age}
+                          onChange={(e) => handleInputChange('age', e.target.value)}
+                          placeholder="Age" 
+                          required
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="sport">Primary Sport</Label>
-                        <Select>
+                        <Select value={formData.sport} onValueChange={(value) => handleInputChange('sport', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="Select sport" />
                           </SelectTrigger>
@@ -78,15 +191,25 @@ const Athletes = () => {
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="location">Location</Label>
-                        <Input id="location" placeholder="City, State" />
+                        <Input 
+                          id="location" 
+                          value={formData.location}
+                          onChange={(e) => handleInputChange('location', e.target.value)}
+                          placeholder="City, State" 
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="bio">Bio</Label>
-                      <Textarea id="bio" placeholder="Tell us about your athletic background and goals" />
+                      <Textarea 
+                        id="bio" 
+                        value={formData.bio}
+                        onChange={(e) => handleInputChange('bio', e.target.value)}
+                        placeholder="Tell us about your athletic background and goals" 
+                      />
                     </div>
-                    <Button size="lg" variant="athlete" className="w-full">
-                      Create Profile
+                    <Button size="lg" variant="athlete" className="w-full" type="submit" disabled={isLoading}>
+                      {isLoading ? 'Creating Profile...' : 'Create Profile'}
                     </Button>
                   </form>
                 </CardContent>
@@ -102,19 +225,28 @@ const Athletes = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-6">
+                  <form onSubmit={handleVideoUpload} className="space-y-6">
                     <div className="border-2 border-dashed border-border rounded-lg p-12 text-center">
                       <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                       <p className="text-lg font-medium mb-2">Upload Video File</p>
                       <p className="text-muted-foreground mb-4">
-                        Drag and drop your video file here, or click to browse
+                        {uploadData.file ? `Selected: ${uploadData.file.name}` : 'Drag and drop your video file here, or click to browse'}
                       </p>
-                      <Button variant="outline">Choose File</Button>
+                      <input
+                        type="file"
+                        accept="video/*"
+                        onChange={handleFileSelect}
+                        className="hidden"
+                        id="file-upload"
+                      />
+                      <Button type="button" variant="outline" onClick={() => document.getElementById('file-upload')?.click()}>
+                        Choose File
+                      </Button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="exerciseType">Exercise Type</Label>
-                        <Select>
+                        <Select value={uploadData.exerciseType} onValueChange={(value) => handleUploadChange('exerciseType', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="Select exercise" />
                           </SelectTrigger>
@@ -130,13 +262,18 @@ const Athletes = () => {
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="date">Performance Date</Label>
-                        <Input id="date" type="date" />
+                        <Input 
+                          id="date" 
+                          type="date" 
+                          value={uploadData.date}
+                          onChange={(e) => handleUploadChange('date', e.target.value)}
+                        />
                       </div>
                     </div>
-                    <Button size="lg" variant="success" className="w-full">
-                      Upload & Analyze
+                    <Button size="lg" variant="success" className="w-full" type="submit" disabled={isLoading}>
+                      {isLoading ? 'Uploading & Analyzing...' : 'Upload & Analyze'}
                     </Button>
-                  </div>
+                  </form>
                 </CardContent>
               </Card>
             </TabsContent>

@@ -8,10 +8,88 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/Layout";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/useToast";
 import { Search, Filter, Star, Trophy, MapPin, Play, Heart, MessageCircle } from "lucide-react";
 
 const Coaches = () => {
   const [activeTab, setActiveTab] = useState("signup");
+  const [coachData, setCoachData] = useState({
+    name: "",
+    organization: "",
+    email: "",
+    experience: "",
+    specialization: "",
+    location: "",
+    certifications: "",
+    bio: "",
+  });
+  const [searchFilters, setSearchFilters] = useState({
+    name: "",
+    sport: "all",
+    age: "all",
+    location: "all",
+  });
+  const [shortlistedAthletes, setShortlistedAthletes] = useState<string[]>([]);
+  
+  const { signup, isLoading } = useAuth();
+  const { toast } = useToast();
+
+  const handleCoachInputChange = (field: string, value: string) => {
+    setCoachData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleFilterChange = (field: string, value: string) => {
+    setSearchFilters(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleCoachSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await signup(coachData, 'coach');
+      toast({
+        type: 'success',
+        title: 'Coach Profile Created!',
+        description: 'Welcome to TalentArena. Start discovering talented athletes.',
+      });
+      setActiveTab("search");
+    } catch (error) {
+      toast({
+        type: 'error',
+        title: 'Error',
+        description: 'Failed to create coach profile. Please try again.',
+      });
+    }
+  };
+
+  const toggleShortlist = (athleteName: string) => {
+    setShortlistedAthletes(prev => {
+      const isShortlisted = prev.includes(athleteName);
+      if (isShortlisted) {
+        toast({
+          type: 'info',
+          title: 'Removed from Shortlist',
+          description: `${athleteName} has been removed from your shortlist.`,
+        });
+        return prev.filter(name => name !== athleteName);
+      } else {
+        toast({
+          type: 'success',
+          title: 'Added to Shortlist',
+          description: `${athleteName} has been added to your shortlist.`,
+        });
+        return [...prev, athleteName];
+      }
+    });
+  };
+
+  const sendMessage = (athleteName: string) => {
+    toast({
+      type: 'info',
+      title: 'Message Sent',
+      description: `Your message has been sent to ${athleteName}.`,
+    });
+  };
 
   const mockAthletes = [
     {
@@ -73,29 +151,53 @@ const Coaches = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form className="space-y-6">
+                  <form onSubmit={handleCoachSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="coachName">Full Name</Label>
-                        <Input id="coachName" placeholder="Enter your full name" />
+                        <Input 
+                          id="coachName" 
+                          value={coachData.name}
+                          onChange={(e) => handleCoachInputChange('name', e.target.value)}
+                          placeholder="Enter your full name" 
+                          required
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="organization">Organization</Label>
-                        <Input id="organization" placeholder="School/Club/Team name" />
+                        <Input 
+                          id="organization" 
+                          value={coachData.organization}
+                          onChange={(e) => handleCoachInputChange('organization', e.target.value)}
+                          placeholder="School/Club/Team name" 
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="coachEmail">Email</Label>
-                      <Input id="coachEmail" type="email" placeholder="Enter your email" />
+                      <Input 
+                        id="coachEmail" 
+                        type="email" 
+                        value={coachData.email}
+                        onChange={(e) => handleCoachInputChange('email', e.target.value)}
+                        placeholder="Enter your email" 
+                        required
+                      />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="experience">Years of Experience</Label>
-                        <Input id="experience" type="number" placeholder="Years" />
+                        <Input 
+                          id="experience" 
+                          type="number" 
+                          value={coachData.experience}
+                          onChange={(e) => handleCoachInputChange('experience', e.target.value)}
+                          placeholder="Years" 
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="specialization">Sport Specialization</Label>
-                        <Select>
+                        <Select value={coachData.specialization} onValueChange={(value) => handleCoachInputChange('specialization', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="Primary sport" />
                           </SelectTrigger>
@@ -111,19 +213,34 @@ const Coaches = () => {
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="coachLocation">Location</Label>
-                        <Input id="coachLocation" placeholder="City, State" />
+                        <Input 
+                          id="coachLocation" 
+                          value={coachData.location}
+                          onChange={(e) => handleCoachInputChange('location', e.target.value)}
+                          placeholder="City, State" 
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="certifications">Certifications</Label>
-                      <Input id="certifications" placeholder="List your coaching certifications" />
+                      <Input 
+                        id="certifications" 
+                        value={coachData.certifications}
+                        onChange={(e) => handleCoachInputChange('certifications', e.target.value)}
+                        placeholder="List your coaching certifications" 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="coachBio">Professional Bio</Label>
-                      <Textarea id="coachBio" placeholder="Describe your coaching philosophy and experience" />
+                      <Textarea 
+                        id="coachBio" 
+                        value={coachData.bio}
+                        onChange={(e) => handleCoachInputChange('bio', e.target.value)}
+                        placeholder="Describe your coaching philosophy and experience" 
+                      />
                     </div>
-                    <Button size="lg" variant="coach" className="w-full">
-                      Create Coach Profile
+                    <Button size="lg" variant="coach" className="w-full" type="submit" disabled={isLoading}>
+                      {isLoading ? 'Creating Profile...' : 'Create Coach Profile'}
                     </Button>
                   </form>
                 </CardContent>
@@ -238,10 +355,18 @@ const Coaches = () => {
                         <Button size="sm" variant="default" className="flex-1">
                           View Profile
                         </Button>
-                        <Button size="sm" variant="outline">
-                          <Heart className="h-4 w-4" />
+                        <Button 
+                          size="sm" 
+                          variant={shortlistedAthletes.includes(athlete.name) ? "default" : "outline"}
+                          onClick={() => toggleShortlist(athlete.name)}
+                        >
+                          <Heart className={`h-4 w-4 ${shortlistedAthletes.includes(athlete.name) ? 'fill-current' : ''}`} />
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => sendMessage(athlete.name)}
+                        >
                           <MessageCircle className="h-4 w-4" />
                         </Button>
                       </div>

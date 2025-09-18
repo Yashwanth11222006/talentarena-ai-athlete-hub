@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Layout from "@/components/Layout";
+import { InteractiveDemo } from "@/components/InteractiveDemo";
 import { ArrowRight, Play, BarChart3, Users, Target, Shield } from "lucide-react";
 import heroImage from "@/assets/hero-sports.jpg";
 import dashboardImage from "@/assets/dashboard-analytics.jpg";
@@ -145,11 +146,7 @@ const Index = () => {
               </Button>
             </div>
             <div className="relative">
-              <img
-                src={aiTrackingImage}
-                alt="AI motion tracking visualization"
-                className="rounded-2xl shadow-soft w-full h-auto"
-              />
+              <InteractiveDemo />
             </div>
           </div>
         </div>
