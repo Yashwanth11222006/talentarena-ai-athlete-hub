@@ -6,6 +6,7 @@ import { InteractiveDemo } from "@/components/InteractiveDemo";
 import { ArrowRight, Play, BarChart3, Users, Target, Shield } from "lucide-react";
 import heroImage from "@/assets/hero-sports.jpg";
 import dashboardImage from "@/assets/dashboard-analytics.jpg";
+import athletesTrainingImage from "@/assets/athletes-training.jpg";
 import aiTrackingImage from "@/assets/ai-motion-tracking.jpg";
 
 const Index = () => {
@@ -15,27 +16,27 @@ const Index = () => {
       <section className="relative overflow-hidden bg-gradient-to-br from-background to-muted/20 py-20 lg:py-32">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
+            <div className="space-y-8 animate-fade-in">
               <div className="space-y-4">
-                <h1 className="text-4xl lg:text-6xl font-bold tracking-tight">
+                <h1 className="text-4xl lg:text-6xl font-bold tracking-tight animate-scale-in">
                   AI-Powered Sports
                   <span className="block gradient-hero bg-clip-text text-transparent">
                     Talent Assessment
                   </span>
                 </h1>
-                <p className="text-xl text-muted-foreground max-w-lg">
+                <p className="text-xl text-muted-foreground max-w-lg animate-fade-in delay-200">
                   Record, analyze, and showcase your performance — anytime, anywhere. 
                   Connect with coaches and scouts through intelligent assessment.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="xl" variant="hero" asChild>
+              <div className="flex flex-col sm:flex-row gap-4 animate-fade-in delay-300">
+                <Button size="xl" variant="hero" className="hover-scale" asChild>
                   <Link to="/athletes">
                     I'm an Athlete
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button size="xl" variant="coach" asChild>
+                <Button size="xl" variant="coach" className="hover-scale" asChild>
                   <Link to="/coaches">
                     I'm a Coach
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -43,11 +44,11 @@ const Index = () => {
                 </Button>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative animate-fade-in delay-400">
               <img
                 src={heroImage}
                 alt="Athletes training with modern equipment"
-                className="rounded-2xl shadow-soft w-full h-auto"
+                className="rounded-2xl shadow-soft w-full h-auto hover-lift"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
             </div>
@@ -93,9 +94,9 @@ const Index = () => {
                 icon: Users,
               },
             ].map((item, index) => (
-              <Card key={index} className="text-center shadow-card hover:shadow-soft transition-shadow">
+              <Card key={index} className="text-center shadow-card hover-lift animate-fade-in" style={{animationDelay: `${index * 150}ms`}}>
                 <CardHeader>
-                  <div className="w-16 h-16 gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 animate-float">
                     <item.icon className="h-8 w-8 text-white" />
                   </div>
                   <div className="text-2xl font-bold text-primary mb-2">{item.step}</div>
@@ -114,7 +115,7 @@ const Index = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
+            <div className="space-y-8 animate-fade-in">
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold">
                   Advanced AI Motion Tracking
@@ -138,9 +139,9 @@ const Index = () => {
                   <span>Real-time performance analytics</span>
                 </div>
               </div>
-              <Button size="lg" variant="default" asChild>
-                <Link to="/features">
-                  Explore All Features
+              <Button size="lg" variant="default" className="hover-scale" asChild>
+                <Link to="/leaderboard">
+                  View Leaderboards
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -156,11 +157,11 @@ const Index = () => {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="relative order-2 lg:order-1">
+            <div className="relative order-2 lg:order-1 animate-fade-in">
               <img
                 src={dashboardImage}
                 alt="Performance analytics dashboard"
-                className="rounded-2xl shadow-soft w-full h-auto"
+                className="rounded-2xl shadow-soft w-full h-auto hover-lift"
               />
             </div>
             <div className="space-y-8 order-1 lg:order-2">

@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import Athletes from "./pages/Athletes";
 import Coaches from "./pages/Coaches";
 import Officials from "./pages/Officials";
-import Features from "./pages/Features";
+
 import Networking from "./pages/Networking";
 import Leaderboard from "./pages/Leaderboard";
 import Contact from "./pages/Contact";
@@ -27,7 +27,7 @@ const App = () => (
           <Route path="/athletes" element={<Athletes />} />
           <Route path="/coaches" element={<Coaches />} />
           <Route path="/officials" element={<Officials />} />
-          <Route path="/features" element={<Features />} />
+          
           <Route path="/networking" element={<Networking />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/contact" element={<Contact />} />
