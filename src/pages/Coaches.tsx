@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/Layout";
 import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/contexts/ToastContext";
 import { Search, Filter, Star, Trophy, MapPin, Play, Heart, MessageCircle } from "lucide-react";
 
 const Coaches = () => {

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Play, Pause, RotateCcw, CheckCircle } from "lucide-react";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/contexts/ToastContext";
 
 export const InteractiveDemo = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);

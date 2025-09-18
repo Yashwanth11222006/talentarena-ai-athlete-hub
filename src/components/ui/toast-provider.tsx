@@ -1,5 +1,5 @@
 import React from 'react';
-import { useToast, Toast as ToastType } from '@/hooks/useToast';
+import { useToast, Toast as ToastType } from '@/contexts/ToastContext';
 import { Card } from '@/components/ui/card';
 import { X, CheckCircle, XCircle, Info, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -44,7 +44,7 @@ const Toast = ({ toast, onRemove }: { toast: ToastType; onRemove: (id: string) =
   );
 };
 
-export const ToastProvider = () => {
+export const ToastContainer = () => {
   const { toasts, removeToast } = useToast();
 
   if (toasts.length === 0) return null;
