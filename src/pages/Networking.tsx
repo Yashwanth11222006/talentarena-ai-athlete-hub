@@ -6,6 +6,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/Layout";
 import { Search, Users, MessageCircle, UserPlus, Star, MapPin, Trophy, Video } from "lucide-react";
+import networkingImage from "@/assets/networking-event.jpg";
+import athletesTrainingImage from "@/assets/athletes-training.jpg";
+import coachAnalysisImage from "@/assets/coach-analysis.jpg";
 
 const Networking = () => {
   const [activeTab, setActiveTab] = useState("athletes");
@@ -102,11 +105,13 @@ const Networking = () => {
 
   return (
     <Layout>
-      <section className="py-12">
-        <div className="container mx-auto px-4">
+      <section className="relative py-12 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${networkingImage})`}}></div>
+        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">Sports Networking</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-4xl font-bold mb-4 animate-fade-in">Sports Networking</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in delay-200">
               Connect with athletes, coaches, and sports industry professionals to build your network and grow your career
             </p>
           </div>
@@ -120,7 +125,7 @@ const Networking = () => {
             </TabsList>
 
             <TabsContent value="athletes" className="space-y-8">
-              <Card className="shadow-card">
+              <Card className="card-enhanced animate-fade-in">
                 <CardHeader>
                   <CardTitle>Discover Athletes</CardTitle>
                   <CardDescription>Connect with talented athletes from around the world</CardDescription>
@@ -135,7 +140,12 @@ const Networking = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {mockAthletes.map((athlete, index) => (
-                  <Card key={index} className="shadow-card hover:shadow-soft transition-shadow">
+                  <Card key={index} className="network-card group animate-fade-in" style={{animationDelay: `${index * 150}ms`}}>
+                    <div className="hover-image-overlay">
+                      <div className="card-image image-placeholder">
+                        <Users className="h-16 w-16 text-gray-400" />
+                      </div>
+                    </div>
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <div>
@@ -167,15 +177,15 @@ const Networking = () => {
                         <Button 
                           size="sm" 
                           variant={athlete.isFollowing ? "secondary" : "default"} 
-                          className="flex-1"
+                          className="flex-1 btn-enhanced group"
                         >
                           <UserPlus className="h-4 w-4 mr-1" />
                           {athlete.isFollowing ? "Following" : "Follow"}
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" variant="outline" className="hover-scale">
                           <MessageCircle className="h-4 w-4" />
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" variant="outline" className="hover-scale">
                           <Video className="h-4 w-4" />
                         </Button>
                       </div>

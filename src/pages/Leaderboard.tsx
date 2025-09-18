@@ -5,6 +5,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/Layout";
 import { Trophy, Medal, Award, Target, TrendingUp, MapPin } from "lucide-react";
+import leaderboardImage from "@/assets/leaderboard-ceremony.jpg";
+import athletesTrainingImage from "@/assets/athletes-training.jpg";
 
 const Leaderboard = () => {
   const [selectedSport, setSelectedSport] = useState("all");
@@ -104,11 +106,13 @@ const Leaderboard = () => {
 
   return (
     <Layout>
-      <section className="py-12">
-        <div className="container mx-auto px-4">
+      <section className="relative py-12 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${leaderboardImage})`}}></div>
+        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">Global Leaderboard</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-4xl font-bold mb-4 animate-fade-in">Global Leaderboard</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in delay-200">
               See how you rank against athletes worldwide and celebrate achievements together
             </p>
           </div>
@@ -284,7 +288,15 @@ const Leaderboard = () => {
             </TabsContent>
 
             <TabsContent value="achievements" className="space-y-8">
-              <Card className="shadow-card">
+              <div className="section-black rounded-2xl p-8 mb-8">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold text-white mb-4">Achievement System</h2>
+                  <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Unlock exclusive badges and recognition for your athletic achievements
+                  </p>
+                </div>
+              </div>
+              <Card className="card-enhanced animate-fade-in">
                 <CardHeader>
                   <CardTitle>Achievement Badges</CardTitle>
                   <CardDescription>Unlock badges by reaching performance milestones</CardDescription>

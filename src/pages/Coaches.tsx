@@ -11,6 +11,8 @@ import Layout from "@/components/Layout";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
 import { Search, Filter, Star, Trophy, MapPin, Play, Heart, MessageCircle } from "lucide-react";
+import coachAnalysisImage from "@/assets/coach-analysis.jpg";
+import athletesTrainingImage from "@/assets/athletes-training.jpg";
 
 const Coaches = () => {
   const [activeTab, setActiveTab] = useState("signup");
@@ -126,11 +128,13 @@ const Coaches = () => {
 
   return (
     <Layout>
-      <section className="py-12">
-        <div className="container mx-auto px-4">
+      <section className="relative py-12 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${coachAnalysisImage})`}}></div>
+        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">For Coaches</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-4xl font-bold mb-4 animate-fade-in">For Coaches</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in delay-200">
               Discover talented athletes, analyze their performance data, and connect with future champions
             </p>
           </div>

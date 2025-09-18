@@ -8,23 +8,26 @@ import heroImage from "@/assets/hero-sports.jpg";
 import dashboardImage from "@/assets/dashboard-analytics.jpg";
 import athletesTrainingImage from "@/assets/athletes-training.jpg";
 import aiTrackingImage from "@/assets/ai-motion-tracking.jpg";
+import leaderboardImage from "@/assets/leaderboard-ceremony.jpg";
 
 const Index = () => {
   return (
     <Layout>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-background to-muted/20 py-20 lg:py-32">
-        <div className="container mx-auto px-4">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${heroImage})`}}></div>
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8 animate-fade-in">
+            <div className="space-y-8 animate-slide-in-left">
               <div className="space-y-4">
-                <h1 className="text-4xl lg:text-6xl font-bold tracking-tight animate-scale-in">
+                <h1 className="text-4xl lg:text-6xl font-bold tracking-tight animate-scale-in text-white">
                   AI-Powered Sports
-                  <span className="block gradient-hero bg-clip-text text-transparent">
+                  <span className="block text-white">
                     Talent Assessment
                   </span>
                 </h1>
-                <p className="text-xl text-muted-foreground max-w-lg animate-fade-in delay-200">
+                <p className="text-xl text-white/90 max-w-lg animate-fade-in delay-200">
                   Record, analyze, and showcase your performance — anytime, anywhere. 
                   Connect with coaches and scouts through intelligent assessment.
                 </p>
@@ -44,7 +47,7 @@ const Index = () => {
                 </Button>
               </div>
             </div>
-            <div className="relative animate-fade-in delay-400">
+            <div className="relative animate-slide-in-right delay-400">
               <img
                 src={heroImage}
                 alt="Athletes training with modern equipment"
@@ -57,13 +60,15 @@ const Index = () => {
       </section>
 
       {/* Process Flow Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 bg-muted/30 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${athletesTrainingImage})`}}></div>
+        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4 animate-fade-in">
               How TalentArena Works
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in delay-200">
               Our AI-powered platform transforms sports assessment through intelligent video analysis and benchmarking
             </p>
           </div>
@@ -112,10 +117,12 @@ const Index = () => {
       </section>
 
       {/* Features Preview */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${aiTrackingImage})`}}></div>
+        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8 animate-fade-in">
+            <div className="space-y-8 animate-slide-in-left">
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold">
                   Advanced AI Motion Tracking
@@ -146,7 +153,7 @@ const Index = () => {
                 </Link>
               </Button>
             </div>
-            <div className="relative">
+            <div className="relative animate-slide-in-right">
               <InteractiveDemo />
             </div>
           </div>
@@ -154,17 +161,19 @@ const Index = () => {
       </section>
 
       {/* Dashboard Preview */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 bg-muted/30 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${dashboardImage})`}}></div>
+        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="relative order-2 lg:order-1 animate-fade-in">
+            <div className="relative order-2 lg:order-1 animate-slide-in-left">
               <img
                 src={dashboardImage}
                 alt="Performance analytics dashboard"
                 className="rounded-2xl shadow-soft w-full h-auto hover-lift"
               />
             </div>
-            <div className="space-y-8 order-1 lg:order-2">
+            <div className="space-y-8 order-1 lg:order-2 animate-slide-in-right">
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold">
                   Comprehensive Performance Dashboard
@@ -200,20 +209,22 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 gradient-hero text-white">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative py-20 gradient-hero text-white overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${leaderboardImage})`}}></div>
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-3xl lg:text-4xl font-bold">
+            <h2 className="text-3xl lg:text-4xl font-bold animate-fade-in">
               Ready to Showcase Your Talent?
             </h2>
-            <p className="text-xl text-white/90">
+            <p className="text-xl text-white/90 animate-fade-in delay-200">
               Join thousands of athletes already using TalentArena to track their progress and connect with opportunities
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in delay-300">
               <Button size="xl" variant="secondary" asChild>
                 <Link to="/athletes">Get Started as Athlete</Link>
               </Button>
-              <Button size="xl" variant="outline" className="border-white text-white hover:bg-white hover:text-primary" asChild>
+              <Button size="xl" variant="coachBlack" asChild>
                 <Link to="/coaches">Find Talent as Coach</Link>
               </Button>
             </div>

@@ -9,6 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Layout from "@/components/Layout";
 import { useToast } from "@/contexts/ToastContext";
 import { Mail, Phone, MapPin, Clock, MessageCircle, HelpCircle } from "lucide-react";
+import networkingImage from "@/assets/networking-event.jpg";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -95,11 +96,13 @@ const Contact = () => {
 
   return (
     <Layout>
-      <section className="py-12">
-        <div className="container mx-auto px-4">
+      <section className="relative py-12 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${networkingImage})`}}></div>
+        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">Contact & Support</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-4xl font-bold mb-4 animate-fade-in">Contact & Support</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in delay-200">
               Get in touch with our team or find answers to frequently asked questions
             </p>
           </div>

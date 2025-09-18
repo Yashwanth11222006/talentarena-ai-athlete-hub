@@ -10,6 +10,9 @@ import Layout from "@/components/Layout";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
 import { Upload, Play, BarChart3, Trophy, Target, Users } from "lucide-react";
+import athletesTrainingImage from "@/assets/athletes-training.jpg";
+import aiTrackingImage from "@/assets/ai-motion-tracking.jpg";
+import dashboardImage from "@/assets/dashboard-analytics.jpg";
 
 const Athletes = () => {
   const [activeTab, setActiveTab] = useState("signup");
@@ -101,11 +104,13 @@ const Athletes = () => {
 
   return (
     <Layout>
-      <section className="py-12">
-        <div className="container mx-auto px-4">
+      <section className="relative py-12 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80" style={{backgroundImage: `url(${athletesTrainingImage})`}}></div>
+        <div className="absolute inset-0 bg-white/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">For Athletes</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-4xl font-bold mb-4 animate-fade-in">For Athletes</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in delay-200">
               Record your performance, get AI-powered analysis, and showcase your talent to coaches and scouts
             </p>
           </div>
@@ -118,7 +123,7 @@ const Athletes = () => {
             </TabsList>
 
             <TabsContent value="signup" className="space-y-8">
-              <Card className="shadow-card">
+              <Card className="card-enhanced animate-fade-in">
                 <CardHeader>
                   <CardTitle>Create Your Athlete Profile</CardTitle>
                   <CardDescription>
@@ -217,7 +222,7 @@ const Athletes = () => {
             </TabsContent>
 
             <TabsContent value="upload" className="space-y-8">
-              <Card className="shadow-card">
+              <Card className="card-enhanced animate-fade-in delay-200">
                 <CardHeader>
                   <CardTitle>Upload Performance Video</CardTitle>
                   <CardDescription>
@@ -226,8 +231,8 @@ const Athletes = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleVideoUpload} className="space-y-6">
-                    <div className="border-2 border-dashed border-border rounded-lg p-12 text-center">
-                      <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+                    <div className="border-2 border-dashed border-border rounded-lg p-12 text-center hover-image-overlay group cursor-pointer" onClick={() => document.getElementById('file-upload')?.click()}>
+                      <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4 group-hover:text-primary transition-colors duration-300" />
                       <p className="text-lg font-medium mb-2">Upload Video File</p>
                       <p className="text-muted-foreground mb-4">
                         {uploadData.file ? `Selected: ${uploadData.file.name}` : 'Drag and drop your video file here, or click to browse'}
@@ -239,7 +244,7 @@ const Athletes = () => {
                         className="hidden"
                         id="file-upload"
                       />
-                      <Button type="button" variant="outline" onClick={() => document.getElementById('file-upload')?.click()}>
+                      <Button type="button" variant="outline" className="hover-scale">
                         Choose File
                       </Button>
                     </div>
@@ -280,9 +285,9 @@ const Athletes = () => {
 
             <TabsContent value="dashboard" className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <Card className="shadow-card">
+                <Card className="card-enhanced hover-scale-card animate-fade-in">
                   <CardHeader className="text-center">
-                    <Trophy className="mx-auto h-8 w-8 text-accent mb-2" />
+                    <Trophy className="mx-auto h-8 w-8 text-accent mb-2 animate-float" />
                     <CardTitle>Performance Score</CardTitle>
                   </CardHeader>
                   <CardContent className="text-center">
@@ -290,9 +295,9 @@ const Athletes = () => {
                     <p className="text-muted-foreground">Overall Rating</p>
                   </CardContent>
                 </Card>
-                <Card className="shadow-card">
+                <Card className="card-enhanced hover-scale-card animate-fade-in delay-200">
                   <CardHeader className="text-center">
-                    <Target className="mx-auto h-8 w-8 text-accent mb-2" />
+                    <Target className="mx-auto h-8 w-8 text-accent mb-2 animate-float" />
                     <CardTitle>Assessments</CardTitle>
                   </CardHeader>
                   <CardContent className="text-center">
@@ -300,9 +305,9 @@ const Athletes = () => {
                     <p className="text-muted-foreground">Completed</p>
                   </CardContent>
                 </Card>
-                <Card className="shadow-card">
+                <Card className="card-enhanced hover-scale-card animate-fade-in delay-400">
                   <CardHeader className="text-center">
-                    <Users className="mx-auto h-8 w-8 text-accent mb-2" />
+                    <Users className="mx-auto h-8 w-8 text-accent mb-2 animate-float" />
                     <CardTitle>Connections</CardTitle>
                   </CardHeader>
                   <CardContent className="text-center">

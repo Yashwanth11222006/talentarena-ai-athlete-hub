@@ -178,4 +178,230 @@
   .story-link {
     @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
   }
+
+  /* Keyframe Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Animation Classes */
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.8s ease-out forwards;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .delay-600 {
+    animation-delay: 600ms;
+  }
+
+  .delay-700 {
+    animation-delay: 700ms;
+  }
+
+  .delay-800 {
+    animation-delay: 800ms;
+  }
+
+  /* Enhanced Hover Effects */
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-primary/20;
+  }
+
+  .hover-rotate {
+    @apply transition-transform duration-300 hover:rotate-3;
+  }
+
+  .hover-bounce {
+    @apply transition-transform duration-300 hover:-translate-y-2 hover:scale-105;
+  }
+
+  .hover-slide {
+    @apply transition-transform duration-300 hover:translate-x-2;
+  }
+
+  .hover-fade {
+    @apply transition-opacity duration-300 hover:opacity-80;
+  }
+
+  .hover-scale-card {
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-black/10;
+  }
+
+  .hover-image-overlay {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hover-image-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 300ms;
+    z-index: 10;
+  }
+
+  .hover-image-overlay:hover::before {
+    opacity: 1;
+  }
+
+  .hover-image-overlay img {
+    transition: transform 300ms;
+  }
+
+  .hover-image-overlay:hover img {
+    transform: scale(1.1);
+  }
+
+  /* Image Placeholder Styles */
+  .image-placeholder {
+    @apply bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-medium;
+  }
+
+  .image-placeholder:hover {
+    @apply bg-gradient-to-br from-gray-200 to-gray-300 transform scale-105 transition-all duration-300;
+  }
+
+  /* Card Enhancements */
+  .card-enhanced {
+    @apply bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .card-enhanced:hover {
+    @apply border-gray-300;
+  }
+
+  /* Black Section Backgrounds */
+  .section-black {
+    @apply bg-black text-white;
+  }
+
+  .section-black-alt {
+    @apply bg-gray-900 text-white;
+  }
+
+  /* Network Page Card Styles */
+  .network-card {
+    @apply bg-white border border-gray-200 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 overflow-hidden;
+  }
+
+  .network-card:hover {
+    @apply border-gray-300;
+  }
+
+  .network-card .card-image {
+    @apply w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 object-cover transition-transform duration-500 group-hover:scale-110;
+  }
+
+  .network-card .card-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300;
+  }
+
+  /* Button Enhancements */
+  .btn-enhanced {
+    @apply relative overflow-hidden;
+  }
+
+  .btn-enhanced::before {
+    content: '';
+    @apply absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left;
+  }
+
+  .btn-enhanced:hover {
+    @apply transform scale-105;
+  }
 }
